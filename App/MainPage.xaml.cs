@@ -10,7 +10,7 @@ namespace App
         {
             InitializeComponent();
 
-            _viewModel = viewModel;
+            BindingContext = _viewModel = viewModel;
         }
 
     }

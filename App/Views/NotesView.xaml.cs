@@ -1,9 +1,13 @@
+using App.ViewModels;
+
 namespace App.Views;
 
 public partial class NotesView : ContentPage
 {
-	public NotesView()
+	private readonly NotesViewModel _viewModel;
+	public NotesView(NotesViewModel viewModel)
 	{
 		InitializeComponent();
+		BindingContext = _viewModel = viewModel;
 	}
 }
