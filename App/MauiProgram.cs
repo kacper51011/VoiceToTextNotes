@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Maui;
+﻿using App.ViewModels;
+using App.Views;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace App
@@ -16,6 +18,14 @@ namespace App
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            builder.Services.AddTransient<MainPageViewModel>();
+
+            builder.Services.AddTransient<VoiceDetectorView>();
+            builder.Services.AddTransient<VoiceDetectorViewModel>();
+
+            builder.Services.AddTransient<NotesViewModel>();
+            builder.Services.AddTransient<NotesView>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
