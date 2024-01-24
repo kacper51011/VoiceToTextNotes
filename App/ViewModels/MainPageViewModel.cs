@@ -11,15 +11,21 @@ namespace App.ViewModels
     {
 
         private Command NavigateToVoiceDetector {  get; set; }
-        private Command NavigateToNotesStorage {  get; set; }
+        private Command NavigateToNotes {  get; set; }
         private Command ExitApp {  get; set; }
 
         public MainPageViewModel()
         {
             NavigateToVoiceDetector = new Command(async () =>
             {
-                await Shell.Current.GoToAsync("");
+                await Shell.Current.GoToAsync("/VoiceDetector");
             });
+
+            NavigateToNotes = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync("/Notes");
+            });
+
         }
 
     }

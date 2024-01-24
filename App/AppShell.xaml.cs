@@ -9,6 +9,7 @@ namespace App
             InitializeComponent();
 
             Routing.RegisterRoute("/VoiceDetector", typeof(VoiceDetectorView));
+            Routing.RegisterRoute("/Notes", typeof(NotesView));
         }
     }
 }
