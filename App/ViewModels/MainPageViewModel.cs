@@ -1,47 +1,122 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.ComponentModel;
 
 namespace App.ViewModels
 {
-    public class MainPageViewModel
+    public class MainPageViewModel : INotifyPropertyChanged
     {
-        private bool isNavigating { get; set; } = false;
+        private bool isNavigating;
 
-        public Command NavigateToVoiceDetector {  get; set; }
+        public bool IsNavigating
+        {
+            get { return isNavigating; }
+            set
+            {
+                if (isNavigating != value)
+                {
+                    isNavigating = value;
+                    OnPropertyChanged(nameof(IsNavigating));
+
+                }
+            }
+        }
+
+        public Command NavigateToVoiceDetector { get; set; }
         public Command NavigateToNotes { get; set; }
+        public Command NavigateToGuide { get; set; }
         public Command ExitApp { get; set; }
 
         public MainPageViewModel()
         {
-            isNavigating = false;
 
             NavigateToVoiceDetector = new Command(async () =>
             {
-                isNavigating = true;
-                await Shell.Current.GoToAsync("/VoiceDetector");
-            }, canExecute: () =>
-            {
-                return !isNavigating;
+                try
+                {
+                    if (!IsNavigating)
+                    {
+                        IsNavigating = true;
+                        RefreshCanExecutes();
+                        await Shell.Current.GoToAsync("/VoiceDetector");
+
+
+
+
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+
+
             });
 
             NavigateToNotes = new Command(async () =>
             {
-                isNavigating = true;
-                await Shell.Current.GoToAsync("/Notes");
-            }, canExecute: () =>
+                try
+                {
+                    if (!IsNavigating)
+                    {
+                        IsNavigating = true;
+
+                        RefreshCanExecutes();
+                        await Shell.Current.GoToAsync("/Notes");
+
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+
+            });
+            NavigateToGuide = new Command(async () =>
             {
-                return !isNavigating;
+                try
+                {
+                    if (!IsNavigating)
+                    {
+                        IsNavigating = true;
+
+                        RefreshCanExecutes();
+
+                        await Shell.Current.GoToAsync("/Notes");
+
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+
             });
 
-            ExitApp = new Command( () =>
+            ExitApp = new Command(() =>
             {
                 Application.Current.Quit();
             });
         }
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        void RefreshCanExecutes()
+        {
+            (NavigateToVoiceDetector as Command).ChangeCanExecute();
+            (NavigateToNotes as Command).ChangeCanExecute();
+            (NavigateToGuide as Command).ChangeCanExecute();
+
+        }
     }
 }

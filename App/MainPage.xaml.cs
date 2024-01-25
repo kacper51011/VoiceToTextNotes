@@ -13,6 +13,12 @@ namespace App
             BindingContext = _viewModel = viewModel;
         }
 
+        protected override void OnNavigatedTo(NavigatedToEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+            _viewModel.IsNavigating = false;
+        }
+
     }
 
 }
