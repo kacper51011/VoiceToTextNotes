@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using App.Helpers;
+using System.ComponentModel;
 
 namespace App.ViewModels
 {
@@ -30,78 +31,23 @@ namespace App.ViewModels
 
             NavigateToVoiceDetector = new Command(async () =>
             {
-                try
-                {
-                    if (!IsNavigating)
-                    {
-                        IsNavigating = true;
-                        RefreshCanExecutes();
-                        await Shell.Current.GoToAsync("/VoiceDetector");
-
-
-
-
-                    }
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-
-
+                IsNavigating = false;
+                await NavigationHelper.NavigateAndRefreshCommands("/VoiceDetector", NavigateToVoiceDetector!, NavigateToNotes!, NavigateToGuide!);
             });
 
             NavigateToNotes = new Command(async () =>
             {
-                try
-                {
-                    if (!IsNavigating)
-                    {
-                        IsNavigating = true;
-
-                        RefreshCanExecutes();
-                        await Shell.Current.GoToAsync("/Notes");
-
-
-                    }
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-
+                await NavigationHelper.NavigateAndRefreshCommands("/Notes", NavigateToVoiceDetector!, NavigateToNotes!, NavigateToGuide!);
             });
             NavigateToGuide = new Command(async () =>
             {
-                try
-                {
-                    if (!IsNavigating)
-                    {
-                        IsNavigating = true;
-
-                        RefreshCanExecutes();
-
-                        await Shell.Current.GoToAsync("/Notes");
-
-
-                    }
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-
+                await NavigationHelper.NavigateAndRefreshCommands("/Guide", NavigateToVoiceDetector!, NavigateToNotes!, NavigateToGuide!);
             });
 
-            ExitApp = new Command(() =>
-            {
-                Application.Current.Quit();
-            });
+            ExitApp = new Command(Application.Current.Quit);
+
+
+
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -111,12 +57,6 @@ namespace App.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        void RefreshCanExecutes()
-        {
-            (NavigateToVoiceDetector as Command).ChangeCanExecute();
-            (NavigateToNotes as Command).ChangeCanExecute();
-            (NavigateToGuide as Command).ChangeCanExecute();
 
-        }
     }
 }
