@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace App.ViewModels
 {
-    public class VoiceDetectorViewModel
+    public class VoiceDetectorViewModel : BaseViewModel
     {
     }
 }

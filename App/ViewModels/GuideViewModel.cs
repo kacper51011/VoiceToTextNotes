@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace App.ViewModels
 {
-    public class GuideViewModel
+    public class GuideViewModel: BaseViewModel
     {
     }
 }
