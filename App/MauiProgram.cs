@@ -28,6 +28,9 @@ namespace App
             builder.Services.AddTransient<NotesViewModel>();
             builder.Services.AddTransient<NotesView>();
 
+            builder.Services.AddTransient<GuideViewModel>();
+            builder.Services.AddTransient<GuideView>();
+
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
