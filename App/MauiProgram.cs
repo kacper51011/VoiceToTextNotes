@@ -20,6 +20,7 @@ namespace App
                 });
 
             builder.Services.AddTransient<MainPageViewModel>();
+            builder.Services.AddTransient<MainPage>();
 
             builder.Services.AddTransient<VoiceDetectorView>();
             builder.Services.AddTransient<VoiceDetectorViewModel>();

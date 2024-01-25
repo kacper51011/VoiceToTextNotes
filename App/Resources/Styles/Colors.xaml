@@ -8,5 +8,5 @@
 
     <Color x:Key="buttonBackground">#F1F0F0</Color>
     <Color x:Key="textColor">#373737</Color>
-    <Color x:Key="appBackground">#F0F4C3</Color>
+    <Color x:Key="appBackground">White</Color>
 </ResourceDictionary>

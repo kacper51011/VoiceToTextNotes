@@ -1,16 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App.MainPage">
+             x:Class="App.MainPage"
+             Style="{StaticResource Key=PageBackground}"
+             Shell.NavBarIsVisible="False"
+             >
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Button  Text="Create Voice Note" Style="{StaticResource DefaultButton}" Margin="0, 0, 0, 50" Clicked="{Binding NavigateToVoiceDetector}"  />
-            <Button Text="Notes" Style="{StaticResource DefaultButton}" Clicked="{Binding NavigateToNotes}" />
-            <Button Text="Guide" Style="{StaticResource DefaultButton}" />
-        </VerticalStackLayout>
+    <ScrollView VerticalOptions="Center">
+        <Grid RowDefinitions="100,100,100,100, 100" ColumnDefinitions="*" RowSpacing="2" Padding="0, 30, 0, 30" >
+            <Label Grid.Row="0" Text="Voice To Notes" Style="{StaticResource MainLabel}" />
+            <Button Grid.Row="1"  Text="Create Voice Note" Style="{StaticResource MainPageButton}" Command="{Binding NavigateToVoiceDetector}"  />
+            <Button Grid.Row="2" Text="Notes" Style="{StaticResource MainPageButton}" Command="{Binding NavigateToNotes}" />
+            <Button Grid.Row="3" Text="Guide" Style="{StaticResource MainPageButton}" Command="{Binding NavigateToVoiceDetector}" />
+            <Button Grid.Row="4" Text="Exit App" Style="{StaticResource MainPageButton}" Command="{Binding ExitApp}" />
+        </Grid>
     </ScrollView>
 
 </ContentPage>
