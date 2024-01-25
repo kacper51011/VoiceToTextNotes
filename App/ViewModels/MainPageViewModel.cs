@@ -1,11 +1,11 @@
-﻿using App.Helpers;
+﻿
 using System.ComponentModel;
 
 namespace App.ViewModels
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        private bool isNavigating;
+        private bool isNavigating = false;
 
         public bool IsNavigating
         {
@@ -21,28 +21,13 @@ namespace App.ViewModels
             }
         }
 
-        public Command NavigateToVoiceDetector { get; set; }
-        public Command NavigateToNotes { get; set; }
-        public Command NavigateToGuide { get; set; }
+        public Command NavigateToCommand { get; set; }
         public Command ExitApp { get; set; }
 
         public MainPageViewModel()
         {
+            NavigateToCommand = new Command<string>(NavigateFromMainPageTo, CanExecuteNavigation);
 
-            NavigateToVoiceDetector = new Command(async () =>
-            {
-                IsNavigating = false;
-                await NavigationHelper.NavigateAndRefreshCommands("/VoiceDetector", NavigateToVoiceDetector!, NavigateToNotes!, NavigateToGuide!);
-            });
-
-            NavigateToNotes = new Command(async () =>
-            {
-                await NavigationHelper.NavigateAndRefreshCommands("/Notes", NavigateToVoiceDetector!, NavigateToNotes!, NavigateToGuide!);
-            });
-            NavigateToGuide = new Command(async () =>
-            {
-                await NavigationHelper.NavigateAndRefreshCommands("/Guide", NavigateToVoiceDetector!, NavigateToNotes!, NavigateToGuide!);
-            });
 
             ExitApp = new Command(Application.Current.Quit);
 
@@ -57,6 +42,39 @@ namespace App.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        void ResetCommands()
+        {
+            (NavigateToCommand as Command).ChangeCanExecute();
+
+        }
+
+        async void NavigateFromMainPageTo(string url)
+        {
+            try
+            {
+                IsNavigating = true;
+                ResetCommands();
+                await Shell.Current.GoToAsync(url);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void NavigatedToMainPage()
+        {
+            IsNavigating = false;
+            ResetCommands();
+        }
+        private bool CanExecuteNavigation(string url)
+        {
+            return !IsNavigating;
+        }
+
+        
 
     }
 }
