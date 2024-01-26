@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,9 @@ namespace App.ViewModels
 
 
 
-        private bool isStarted = false;
-        private bool isStopped = true;
-        private bool isCompleted = false;
+        private bool canStart = true;
+        private bool canStop = false;
+        private bool canEdit = false;
 
         public string MicrophoneImageSource
         {
@@ -32,41 +33,41 @@ namespace App.ViewModels
                 }
             }
         }
-        public bool IsStarted
+        public bool CanStart
         {
-            get { return isStarted; }
+            get { return canStart; }
             set
             {
-                if (isStarted != value)
+                if (canStart != value)
                 {
-                    isStarted = value;
-                    OnPropertyChanged(nameof(IsStarted));
+                    canStart = value;
+                    OnPropertyChanged(nameof(CanStart));
 
                 }
             }
         }
-        public bool IsStopped
+        public bool CanStop
         {
-            get { return isStopped; }
+            get { return canStop; }
             set
             {
-                if (isStopped != value)
+                if (canStop != value)
                 {
-                    isStopped = value;
-                    OnPropertyChanged(nameof(IsStopped));
+                    canStop = value;
+                    OnPropertyChanged(nameof(CanStop));
 
                 }
             }
         }
-        public bool IsCompleted
+        public bool CanEdit
         {
-            get { return isCompleted; }
+            get { return canEdit; }
             set
             {
-                if (isCompleted != value)
+                if (canEdit != value)
                 {
-                    isCompleted = value;
-                    OnPropertyChanged(nameof(IsCompleted));
+                    canEdit = value;
+                    OnPropertyChanged(nameof(CanEdit));
 
                 }
             }
@@ -74,7 +75,7 @@ namespace App.ViewModels
 
 
 
-        private string displayedInformation = "Click Start button to record!";
+        private string displayedInformation = MicrophoneConsts.beforeDetectingMessage;
         public string DisplayedInformation
         {
             get { return displayedInformation; }
@@ -92,27 +93,43 @@ namespace App.ViewModels
         public Command StartDetecting { get; set; }
         public Command StopDetecting { get; set; }
 
-        public Command EditSavedText { get; set; }
+        public Command StartEditing { get; set; }
 
         public VoiceDetectorViewModel(): base()
         {
 
-            StartDetecting = new Command(async () =>
-            {
-                DisplayedInformation = "Stop recording";
-                MicrophoneImageSource = greenMicrophoneSource;
-            });
+            StartDetecting = new Command(SetDetectingState);
 
-            StopDetecting = new Command(async () =>
-            {
-                
-            });
+            StopDetecting = new Command(SetAfterDetectingState);
 
-            EditSavedText = new Command(async () =>
-            {
-                await Shell.Current.GoToAsync("..");
-            });
-            base.Commands = [StartDetecting, StopDetecting, EditSavedText];
+            StartEditing = new Command(SetWhileEditingState);
+            base.Commands = [StartDetecting, StopDetecting, StartEditing];
+        }
+
+        private void SetDetectingState()
+        {
+            DisplayedInformation = MicrophoneConsts.whileDetectingMessage;
+            MicrophoneImageSource = MicrophoneConsts.greenColorSource;
+            CanStart = false;
+            CanStop = true;
+            CanEdit = false;
+        }
+
+        private void SetAfterDetectingState()
+        {
+            DisplayedInformation = MicrophoneConsts.afterDetectingMessage;
+            MicrophoneImageSource = MicrophoneConsts.redColorSource;
+            CanStart = true;
+            CanStop = false;
+            CanEdit = true;
+        }
+
+        private void SetWhileEditingState()
+        {
+            MicrophoneImageSource = MicrophoneConsts.redColorSource;
+            CanStart = false;
+            CanStop = false;
+            CanEdit = false;
         }
     }
 }

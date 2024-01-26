@@ -13,9 +13,36 @@
         <!--<Button Grid.Row="1" Text="test" Command="{Binding StartDetecting}"/>-->
 
         <Grid Grid.Row="2" ColumnDefinitions="1*, 1*, 1*" ColumnSpacing="5" Margin="10,0,10,40">
-            <Button Grid.Column="0" Text="START" Command="{Binding StartDetecting}" BackgroundColor="{StaticResource startButtonBackground}" Style="{StaticResource VoiceDetectorButton}" />
-            <Button Grid.Column="1" Text="STOP" BackgroundColor="{StaticResource stopButtonBackground}" Style="{StaticResource VoiceDetectorButton}" />
-            <Button Grid.Column="2" Text="EDIT" BackgroundColor="{StaticResource editButtonBackground}" Style="{StaticResource VoiceDetectorButton}" />
+            <Button Grid.Column="0" Text="START" Command="{Binding StartDetecting}" Style="{StaticResource VoiceDetectorButton}" IsEnabled="{Binding CanStart}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding CanStart}" Value="False">
+                        <Setter Property="BackgroundColor" Value="{StaticResource disabledButtonBackground}" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding CanStart}" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource startButtonBackground}" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <Button Grid.Column="1" Text="STOP" Command="{Binding StopDetecting}" Style="{StaticResource VoiceDetectorButton}" IsEnabled="{Binding CanStop}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding CanStop}" Value="False">
+                        <Setter Property="BackgroundColor" Value="{StaticResource disabledButtonBackground}" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding CanStop}" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource stopButtonBackground}" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <Button Grid.Column="2" Text="EDIT" Command="{Binding StartEditing}" Style="{StaticResource VoiceDetectorButton}" IsEnabled="{Binding CanEdit}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding CanEdit}" Value="False">
+                        <Setter Property="BackgroundColor" Value="{StaticResource disabledButtonBackground}" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button" Binding="{Binding CanEdit}" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource editButtonBackground}" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
         </Grid>
     </Grid>
 </ContentPage>
