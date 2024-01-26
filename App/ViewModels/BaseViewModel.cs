@@ -42,7 +42,7 @@ namespace App.ViewModels
 
         }
 
-        protected async void NavigateFromMainPageTo(string url)
+        protected async void NavigateFromPageTo(string url)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace App.ViewModels
             }
         }
 
-        public void NavigatedToMainPage()
+        public void NavigatedToPage()
         {
             IsNavigating = false;
             ResetCommands();

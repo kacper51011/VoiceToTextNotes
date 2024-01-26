@@ -17,7 +17,7 @@ namespace App
         protected override void OnNavigatedTo(NavigatedToEventArgs args)
         {
             base.OnNavigatedTo(args);
-            _viewModel.NavigatedToMainPage();
+            _viewModel.NavigatedToPage();
         }
 
 

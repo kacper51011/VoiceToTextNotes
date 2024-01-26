@@ -12,7 +12,7 @@ namespace App.ViewModels
         public MainPageViewModel(): base()
         {
  
-            NavigateToCommand = new Command<string>(NavigateFromMainPageTo, CanExecuteNavigation);
+            NavigateToCommand = new Command<string>(NavigateFromPageTo, CanExecuteNavigation);
            base.Commands = [NavigateToCommand];
 
             ExitApp = new Command(Application.Current.Quit);

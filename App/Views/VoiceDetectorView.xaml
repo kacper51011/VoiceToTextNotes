@@ -3,16 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.Views.VoiceDetectorView"
              Title="VoiceDetectorView">
-    <FlexLayout Direction="Column" JustifyContent="SpaceAround" >
-        <Label 
-            Text="Click Start To Start Recording!"
+    <Grid RowDefinitions="150, 1*, 100" RowSpacing="50" >
+        <Label Grid.Row="0"
+            Text="{Binding DisplayedInformation}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Image Source="{Binding ImageSource}"  />
-        <FlexLayout Direction="Row" JustifyContent="SpaceAround">
-            <Button Text="START" BackgroundColor="{StaticResource startButtonBackground}" Style="{StaticResource VoiceDetectorButton}" />
-            <Button Text="STOP" BackgroundColor="{StaticResource stopButtonBackground}" Style="{StaticResource VoiceDetectorButton}" />
-            <Button Text="EDIT" BackgroundColor="{StaticResource editButtonBackground}" Style="{StaticResource VoiceDetectorButton}" />
-        </FlexLayout>
-    </FlexLayout>
+        <!--<Image Source="greenmicrophone.svg" IsVisible="{Binding IsStarted}"   />-->
+        <Image Grid.Row="1" Source="{Binding MicrophoneImageSource}"  HeightRequest="300"/>
+        <!--<Button Grid.Row="1" Text="test" Command="{Binding StartDetecting}"/>-->
+
+        <Grid Grid.Row="2" ColumnDefinitions="1*, 1*, 1*" ColumnSpacing="5" Margin="10,0,10,40">
+            <Button Grid.Column="0" Text="START" Command="{Binding StartDetecting}" BackgroundColor="{StaticResource startButtonBackground}" Style="{StaticResource VoiceDetectorButton}" />
+            <Button Grid.Column="1" Text="STOP" BackgroundColor="{StaticResource stopButtonBackground}" Style="{StaticResource VoiceDetectorButton}" />
+            <Button Grid.Column="2" Text="EDIT" BackgroundColor="{StaticResource editButtonBackground}" Style="{StaticResource VoiceDetectorButton}" />
+        </Grid>
+    </Grid>
 </ContentPage>

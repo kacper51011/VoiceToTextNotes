@@ -10,4 +10,10 @@ public partial class VoiceDetectorView : ContentPage
 		InitializeComponent();
 		BindingContext = _viewModel = viewModel;
 	}
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+        _viewModel.NavigatedToPage();
+    }
 }

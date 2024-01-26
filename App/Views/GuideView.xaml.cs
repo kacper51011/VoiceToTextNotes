@@ -11,4 +11,10 @@ public partial class GuideView : ContentPage
 
 		BindingContext = _viewModel = viewModel;
 	}
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+        _viewModel.NavigatedToPage();
+    }
 }

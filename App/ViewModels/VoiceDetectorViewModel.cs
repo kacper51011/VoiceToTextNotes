@@ -3,27 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace App.ViewModels
 {
     public class VoiceDetectorViewModel : BaseViewModel
     {
-        public const string redMicrophoneImageSource = "greenmicrophone.svg";
-        public const string greenMicropHoneImageSource = "redmicrophone.svg";
+        private const string redMicrophoneSource = "redmicrophone.svg";
+        private const string greenMicrophoneSource = "greenmicrophone.svg";
+        private string microphoneImageSource = redMicrophoneSource;
 
-        private string imageSource = "redmicrophone.svg";
+
+
         private bool isStarted = false;
+        private bool isStopped = true;
         private bool isCompleted = false;
 
-        public string ImageSource
+        public string MicrophoneImageSource
         {
-            get { return imageSource; }
+            get { return microphoneImageSource; }
             set
             {
-                if (imageSource != value)
+                if (microphoneImageSource != value)
                 {
-                    imageSource = value;
-                    OnPropertyChanged(nameof(ImageSource));
+                    microphoneImageSource = value;
+                    OnPropertyChanged(nameof(MicrophoneImageSource));
 
                 }
             }
@@ -37,6 +41,19 @@ namespace App.ViewModels
                 {
                     isStarted = value;
                     OnPropertyChanged(nameof(IsStarted));
+
+                }
+            }
+        }
+        public bool IsStopped
+        {
+            get { return isStopped; }
+            set
+            {
+                if (isStopped != value)
+                {
+                    isStopped = value;
+                    OnPropertyChanged(nameof(IsStopped));
 
                 }
             }
@@ -57,20 +74,45 @@ namespace App.ViewModels
 
 
 
-        private string displayedInformation;
+        private string displayedInformation = "Click Start button to record!";
+        public string DisplayedInformation
+        {
+            get { return displayedInformation; }
+            set
+            {
+                if (displayedInformation != value)
+                {
+                    displayedInformation = value;
+                    OnPropertyChanged(nameof(DisplayedInformation));
 
+                }
+            }
+        }
 
         public Command StartDetecting { get; set; }
         public Command StopDetecting { get; set; }
 
         public Command EditSavedText { get; set; }
 
-        public VoiceDetectorViewModel()
+        public VoiceDetectorViewModel(): base()
         {
+
             StartDetecting = new Command(async () =>
             {
-                ImageSource = greenMicropHoneImageSource;
+                DisplayedInformation = "Stop recording";
+                MicrophoneImageSource = greenMicrophoneSource;
             });
+
+            StopDetecting = new Command(async () =>
+            {
+                
+            });
+
+            EditSavedText = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync("..");
+            });
+            base.Commands = [StartDetecting, StopDetecting, EditSavedText];
         }
     }
 }
