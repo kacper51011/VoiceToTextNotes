@@ -9,7 +9,7 @@ namespace App.State
 {
     public class AppState
     {
-        public bool SoundOn { get; set; } = false;
+        public bool SoundOn { get; set; } = true;
         
     }
 }

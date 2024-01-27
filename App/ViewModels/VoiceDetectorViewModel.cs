@@ -13,7 +13,7 @@ namespace App.ViewModels
         private string microphoneImageSource = MicrophoneConsts.redColorSource;
         private bool canStart = true;
         private bool canStop = false;
-        private bool canEdit = false;
+        private bool canPause = false;
 
         public string MicrophoneImageSource
         {
@@ -54,15 +54,15 @@ namespace App.ViewModels
                 }
             }
         }
-        public bool CanEdit
+        public bool CanPause
         {
-            get { return canEdit; }
+            get { return canPause; }
             set
             {
-                if (canEdit != value)
+                if (canPause != value)
                 {
-                    canEdit = value;
-                    OnPropertyChanged(nameof(CanEdit));
+                    canPause = value;
+                    OnPropertyChanged(nameof(CanPause));
 
                 }
             }
@@ -88,7 +88,7 @@ namespace App.ViewModels
         public Command StartDetecting { get; set; }
         public Command StopDetecting { get; set; }
 
-        public Command StartEditing { get; set; }
+        public Command PauseDetecting { get; set; }
 
         public VoiceDetectorViewModel(IAudioManager audioManager, AppState appState) : base()
         {
@@ -99,8 +99,8 @@ namespace App.ViewModels
 
             StopDetecting = new Command(SetAfterDetectingState);
 
-            StartEditing = new Command(SetWhileEditingState);
-            base.Commands = [StartDetecting, StopDetecting, StartEditing];
+            PauseDetecting = new Command(PauseState);
+            base.Commands = [StartDetecting, StopDetecting, PauseDetecting];
         }
 
         private async void SetDetectingState()
@@ -109,7 +109,7 @@ namespace App.ViewModels
             MicrophoneImageSource = MicrophoneConsts.greenColorSource;
             CanStart = false;
             CanStop = true;
-            CanEdit = false;
+            CanPause = false;
             if (_state.SoundOn)
             {
                 if (AudioPlayer != null)
@@ -131,7 +131,7 @@ namespace App.ViewModels
             MicrophoneImageSource = MicrophoneConsts.redColorSource;
             CanStart = true;
             CanStop = false;
-            CanEdit = true;
+            CanPause = true;
 
             if (_state.SoundOn)
             {
@@ -140,12 +140,12 @@ namespace App.ViewModels
 
         }
 
-        private void SetWhileEditingState()
+        private void PauseState()
         {
             MicrophoneImageSource = MicrophoneConsts.redColorSource;
             CanStart = false;
             CanStop = false;
-            CanEdit = false;
+            CanPause = false;
 
             if (_state.SoundOn)
             {

@@ -8,8 +8,11 @@
 
     <Color x:Key="buttonBackground">#F1F0F0</Color>
     <Color x:Key="stopButtonBackground">#FF5252</Color>
+    <Color x:Key="disabledStopButtonBackground">#FFEBEE</Color>
     <Color x:Key="startButtonBackground">#69F0AE</Color>
-    <Color x:Key="editButtonBackground">#448AFF</Color>
+    <Color x:Key="disabledStartButtonBackground">#E8F5E9</Color>
+    <Color x:Key="pauseButtonBackground">#FFD740</Color>
+    <Color x:Key="disabledPauseButtonBackground">#FFF3E0</Color>
     <Color x:Key="disabledButtonBackground">#CFD8DC</Color>
     <Color x:Key="textColor">#373737</Color>
     <Color x:Key="appBackground">White</Color>
