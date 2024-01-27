@@ -1,7 +1,9 @@
-﻿using App.ViewModels;
+﻿using App.State;
+using App.ViewModels;
 using App.Views;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Plugin.Maui.Audio;
 
 namespace App
 {
@@ -19,6 +21,12 @@ namespace App
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton(AudioManager.Current);
+
+
+
+            builder.Services.AddSingleton<AppState>();
+
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<MainPage>();
 
@@ -28,8 +36,8 @@ namespace App
             builder.Services.AddTransient<NotesViewModel>();
             builder.Services.AddTransient<NotesView>();
 
-            builder.Services.AddTransient<GuideViewModel>();
-            builder.Services.AddTransient<GuideView>();
+            builder.Services.AddTransient<SettingsViewModel>();
+            builder.Services.AddTransient<SettingsView>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

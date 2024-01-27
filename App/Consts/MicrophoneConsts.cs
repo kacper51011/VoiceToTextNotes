@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Models
+namespace App.Consts
 {
     public class MicrophoneConsts
     {

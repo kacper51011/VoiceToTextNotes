@@ -1,21 +1,16 @@
-﻿using App.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.Maui.ApplicationModel.Permissions;
+﻿using App.Consts;
+using App.State;
+using Plugin.Maui.Audio;
 
 namespace App.ViewModels
 {
     public class VoiceDetectorViewModel : BaseViewModel
     {
-        private const string redMicrophoneSource = "redmicrophone.svg";
-        private const string greenMicrophoneSource = "greenmicrophone.svg";
-        private string microphoneImageSource = redMicrophoneSource;
+        private readonly IAudioManager _audioManager;
+        private readonly AppState _state;
+        private IAudioPlayer? AudioPlayer { get; set; } = null;
 
-
-
+        private string microphoneImageSource = MicrophoneConsts.redColorSource;
         private bool canStart = true;
         private bool canStop = false;
         private bool canEdit = false;
@@ -95,8 +90,10 @@ namespace App.ViewModels
 
         public Command StartEditing { get; set; }
 
-        public VoiceDetectorViewModel(): base()
+        public VoiceDetectorViewModel(IAudioManager audioManager, AppState appState) : base()
         {
+            _audioManager = audioManager;
+            _state = appState;
 
             StartDetecting = new Command(SetDetectingState);
 
@@ -106,13 +103,26 @@ namespace App.ViewModels
             base.Commands = [StartDetecting, StopDetecting, StartEditing];
         }
 
-        private void SetDetectingState()
+        private async void SetDetectingState()
         {
             DisplayedInformation = MicrophoneConsts.whileDetectingMessage;
             MicrophoneImageSource = MicrophoneConsts.greenColorSource;
             CanStart = false;
             CanStop = true;
             CanEdit = false;
+            if (_state.SoundOn)
+            {
+                if (AudioPlayer != null)
+                {
+                    AudioPlayer.Play();
+                }
+                else
+                {
+                    AudioPlayer = _audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("buttonclick.mp3"));
+                    AudioPlayer.Play();
+                }
+            }
+
         }
 
         private void SetAfterDetectingState()
@@ -122,6 +132,12 @@ namespace App.ViewModels
             CanStart = true;
             CanStop = false;
             CanEdit = true;
+
+            if (_state.SoundOn)
+            {
+                AudioPlayer!.Play();
+            }
+
         }
 
         private void SetWhileEditingState()
@@ -130,6 +146,12 @@ namespace App.ViewModels
             CanStart = false;
             CanStop = false;
             CanEdit = false;
+
+            if (_state.SoundOn)
+            {
+                AudioPlayer!.Play();
+            }
+
         }
     }
 }
