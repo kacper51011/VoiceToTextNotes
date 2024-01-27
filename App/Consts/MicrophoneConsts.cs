@@ -10,10 +10,15 @@ namespace App.Consts
     {
         public const string redColorSource = "redmicrophone.svg";
         public const string greenColorSource = "greenmicrophone.svg";
+        public const string orangeColorSource = "orangemicrophone.svg";
 
         public const string beforeDetectingMessage = "Click green button to start recording!";
         public const string whileDetectingMessage = "Click red button to stop recording!";
-        public const string afterDetectingMessage = "Click blue button to start editing your message";
+        //public const string afterDetectingMessage = "Click blue button to start editing your message";
+        public const string whilePausedMessage = "Click green button to resume recording";
+
+        public const string startButtonState = "START";
+        public const string resumeButtonState = "RESUME";
 
 
 

@@ -48,6 +48,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\greenmicrophone.svg" />
+	  <None Remove="Resources\Images\orangemicrophone.svg" />
 	  <None Remove="Resources\Images\redmicrophone.svg" />
 	</ItemGroup>
 

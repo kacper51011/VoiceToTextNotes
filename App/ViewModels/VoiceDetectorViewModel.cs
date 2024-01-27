@@ -10,11 +10,26 @@ namespace App.ViewModels
         private readonly AppState _state;
         private IAudioPlayer? AudioPlayer { get; set; } = null;
 
+
+        private string greenButtonState = MicrophoneConsts.startButtonState;
         private string microphoneImageSource = MicrophoneConsts.redColorSource;
         private bool canStart = true;
         private bool canStop = false;
         private bool canPause = false;
 
+        public string GreenButtonState
+        {
+            get { return greenButtonState; }
+            set
+            {
+                if (greenButtonState != value)
+                {
+                    greenButtonState = value;
+                    OnPropertyChanged(nameof(GreenButtonState));
+
+                }
+            }
+        }
         public string MicrophoneImageSource
         {
             get { return microphoneImageSource; }
@@ -108,8 +123,9 @@ namespace App.ViewModels
             DisplayedInformation = MicrophoneConsts.whileDetectingMessage;
             MicrophoneImageSource = MicrophoneConsts.greenColorSource;
             CanStart = false;
+            CanPause = true;
             CanStop = true;
-            CanPause = false;
+
             if (_state.SoundOn)
             {
                 if (AudioPlayer != null)
@@ -127,11 +143,12 @@ namespace App.ViewModels
 
         private void SetAfterDetectingState()
         {
-            DisplayedInformation = MicrophoneConsts.afterDetectingMessage;
+            DisplayedInformation = MicrophoneConsts.beforeDetectingMessage;
             MicrophoneImageSource = MicrophoneConsts.redColorSource;
+            GreenButtonState = MicrophoneConsts.startButtonState;
             CanStart = true;
             CanStop = false;
-            CanPause = true;
+            CanPause = false;
 
             if (_state.SoundOn)
             {
@@ -142,10 +159,14 @@ namespace App.ViewModels
 
         private void PauseState()
         {
-            MicrophoneImageSource = MicrophoneConsts.redColorSource;
-            CanStart = false;
-            CanStop = false;
+            MicrophoneImageSource = MicrophoneConsts.orangeColorSource;
+            GreenButtonState = MicrophoneConsts.resumeButtonState;
+            DisplayedInformation = MicrophoneConsts.whilePausedMessage;
+
+            CanStart = true;
+            CanStop = true;
             CanPause = false;
+
 
             if (_state.SoundOn)
             {
