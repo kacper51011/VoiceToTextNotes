@@ -10,7 +10,7 @@ namespace App
 
             Routing.RegisterRoute("/VoiceDetector", typeof(VoiceDetectorView));
             Routing.RegisterRoute("/Notes", typeof(NotesView));
-            Routing.RegisterRoute("/Guide", typeof(GuideView));
+            Routing.RegisterRoute("/Settings", typeof(SettingsView));
         }
     }
 }
