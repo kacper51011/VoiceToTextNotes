@@ -2,6 +2,7 @@
 using App.ViewModels;
 using App.Views;
 using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Media;
 using Microsoft.Extensions.Logging;
 using Plugin.Maui.Audio;
 
@@ -22,7 +23,7 @@ namespace App
                 });
 
             builder.Services.AddSingleton(AudioManager.Current);
-
+            builder.Services.AddSingleton<ISpeechToText>(SpeechToText.Default);
 
 
             builder.Services.AddSingleton<AppState>();
