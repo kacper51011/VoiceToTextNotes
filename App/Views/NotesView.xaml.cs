@@ -15,5 +15,13 @@ public partial class NotesView : ContentPage
     {
         base.OnNavigatedTo(args);
         _viewModel.NavigatedToPage();
+
+		
+    }
+
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.GetNotes();
     }
 }

@@ -11,15 +11,25 @@ namespace App.Services.Db
     public class LocalDbService
     {
         private const string DbName = "Local.db3";
-        private readonly SQLiteAsyncConnection _connection;
+        private  SQLiteAsyncConnection _connection;
         public LocalDbService()
+        {   
+
+        }
+
+        async Task Init()
         {
-            _connection = new SQLiteAsyncConnection(Path.Combine(FileSystem.AppDataDirectory,DbName));
-            _connection.CreateTableAsync<Note>();
+            if (_connection != null)
+            {
+                return;
+            }
+            _connection = new SQLiteAsyncConnection(Path.Combine(FileSystem.AppDataDirectory, DbName));
+            var result = await _connection.CreateTableAsync<Note>();
         }
 
         public async Task<List<Note>> GetNotes()
         {
+            await Init();
             return await _connection.Table<Note>().ToListAsync();
         }
 
