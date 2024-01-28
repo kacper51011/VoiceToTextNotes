@@ -1,4 +1,5 @@
-﻿using App.State;
+﻿using App.Services.Db;
+using App.State;
 using App.ViewModels;
 using App.Views;
 using CommunityToolkit.Maui;
@@ -25,7 +26,7 @@ namespace App
             builder.Services.AddSingleton(AudioManager.Current);
             builder.Services.AddSingleton<ISpeechToText>(SpeechToText.Default);
 
-
+            builder.Services.AddSingleton<LocalDbService>();
             builder.Services.AddSingleton<AppState>();
 
             builder.Services.AddTransient<MainPageViewModel>();
