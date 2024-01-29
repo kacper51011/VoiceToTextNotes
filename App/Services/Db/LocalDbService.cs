@@ -29,7 +29,11 @@ namespace App.Services.Db
 
         public async Task<List<Note>> GetNotes()
         {
-            await Init();
+            if ( _connection == null )
+            {
+                await Init();
+            }
+
             return await _connection.Table<Note>().ToListAsync();
         }
 
@@ -40,7 +44,11 @@ namespace App.Services.Db
 
         public async Task CreateNote(Note note)
         {
-             await _connection.InsertAsync(note);
+            if (_connection == null)
+            {
+                await Init();
+            }
+            await _connection.InsertAsync(note);
         }
 
         public async Task Delete(Note note)

@@ -1,8 +1,11 @@
 ﻿using App.Consts;
+using App.Models;
+using App.Services.Db;
 using App.State;
+using App.Views;
 using CommunityToolkit.Maui.Media;
+using CommunityToolkit.Maui.Views;
 using Plugin.Maui.Audio;
-using System.Diagnostics;
 using System.Globalization;
 
 namespace App.ViewModels
@@ -12,6 +15,7 @@ namespace App.ViewModels
         private readonly IAudioManager _audioManager;
         private readonly ISpeechToText _speechToText;
         private readonly AppState _state;
+        private readonly LocalDbService _localDbService;
         private IAudioPlayer? AudioPlayer { get; set; } = null;
 
 
@@ -38,8 +42,8 @@ namespace App.ViewModels
                 }
             }
         }
-        
-        
+
+
 
         public string GreenButtonState
         {
@@ -129,8 +133,12 @@ namespace App.ViewModels
 
         public Command PauseDetecting { get; set; }
 
-        public VoiceDetectorViewModel(IAudioManager audioManager, AppState appState, ISpeechToText speechToText) : base()
+        public VoiceDetectorViewModel(IAudioManager audioManager, AppState appState, ISpeechToText speechToText, LocalDbService dbService) : base()
         {
+            _localDbService = dbService;
+            
+
+
             _speechToText = speechToText;
             _audioManager = audioManager;
             _state = appState;
@@ -166,13 +174,13 @@ namespace App.ViewModels
 
             _speechToText.RecognitionResultCompleted += OnRecognitionTextCompleted;
             await _speechToText.StartListenAsync(CultureInfo.CurrentCulture);
-            
+
         }
 
         void OnRecognitionTextCompleted(object? sender, SpeechToTextRecognitionResultCompletedEventArgs args)
         {
             CurrentRecordState = args.RecognitionResult;
-            
+
         }
 
 
@@ -201,30 +209,49 @@ namespace App.ViewModels
 
         private async void SetAfterDetectingState()
         {
-            DisplayedInformation = MicrophoneConsts.beforeDetectingMessage;
-            MicrophoneImageSource = MicrophoneConsts.redColorSource;
-            GreenButtonState = MicrophoneConsts.startButtonState;
-            CanStart = true;
-            CanStop = false;
-            CanPause = false;
-
-            if (_state.SoundOn)
+            try
             {
-                AudioPlayer!.Play();
+                DisplayedInformation = MicrophoneConsts.beforeDetectingMessage;
+                MicrophoneImageSource = MicrophoneConsts.redColorSource;
+                GreenButtonState = MicrophoneConsts.startButtonState;
+                CanStart = true;
+                CanStop = false;
+                CanPause = false;
+
+                if (_state.SoundOn)
+                {
+                    AudioPlayer!.Play();
+                }
+                _speechToText.RecognitionResultCompleted -= OnRecognitionTextCompleted;
+                RecordSlices.Add(CurrentRecordState);
+                var concatenatedRecords = string.Join(" ", RecordSlices.ToArray());
+
+                CurrentRecordState = "";
+                RecordSlices.Clear();
+
+                await _speechToText.StopListenAsync();
+                var result = await Shell.Current.ShowPopupAsync(new CreateNoteFromVoicePopUp(concatenatedRecords));
+                if (result is NoteInformation noteResult)
+                {
+                    await _localDbService.CreateNote(new Note {Name = noteResult.Name, Content= noteResult.Content});
+                    await Shell.Current.DisplayAlert("Congratulations!", "Your Note has been created", "OK");
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Note rejected", "You Rejected your note", "OK");
+
+                }
+
             }
-            _speechToText.RecognitionResultCompleted -= OnRecognitionTextCompleted;
-            RecordSlices.Add(CurrentRecordState);
-            var concatenatedRecords = string.Join(" ", RecordSlices.ToArray());
 
-            CurrentRecordState = "";
-            RecordSlices.Clear();
+            catch (Exception)
+            {
 
-            await _speechToText.StopListenAsync();
-            await Shell.Current.DisplayAlert("text", concatenatedRecords, "OK");
-            CurrentRecordState = "";
+                throw;
+            }
+
+
 
         }
-
-
     }
 }
