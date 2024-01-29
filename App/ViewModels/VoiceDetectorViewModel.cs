@@ -233,7 +233,7 @@ namespace App.ViewModels
                 var result = await Shell.Current.ShowPopupAsync(new CreateNoteFromVoicePopUp(concatenatedRecords));
                 if (result is NoteInformation noteResult)
                 {
-                    await _localDbService.CreateNote(new Note {Name = noteResult.Name, Content= noteResult.Content});
+                    await _localDbService.CreateNote(new Note {Name = noteResult.Name, Content= noteResult.Content, CreatedAt= noteResult.Created});
                     await Shell.Current.DisplayAlert("Congratulations!", "Your Note has been created", "OK");
                 }
                 else

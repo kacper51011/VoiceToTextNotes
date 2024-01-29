@@ -18,6 +18,8 @@ namespace App.Models
         public string Name { get; set; }
         [Column("content")]
         public string Content { get; set; }
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set;}
 
     }
 }

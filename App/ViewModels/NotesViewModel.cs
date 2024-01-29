@@ -13,14 +13,14 @@ namespace App.ViewModels
     {
         private readonly LocalDbService _localDbService;
 
-        public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
+        public ObservableCollection<NoteRow> Notes { get; set; } = new ObservableCollection<NoteRow>();
         public Command AddMockNote { get; set; }
         public NotesViewModel(LocalDbService localDbService)
         {
             _localDbService = localDbService;
             AddMockNote = new Command(async () =>
             {
-                await _localDbService.CreateNote(new Note { Content = "Mock Content", Name = "Mocked Name" });
+                await _localDbService.CreateNote(new Note { Content = "Mock Content", Name = "Mocked Name", CreatedAt= DateTime.Now });
             });
         }
 
@@ -33,7 +33,7 @@ namespace App.ViewModels
                 {
                     foreach (var note in notes)
                     {
-                        Notes.Add(note);
+                        Notes.Add(new NoteRow() { Id = note.Id, Content = note.Content, Name = note.Name, DisplayedTimeCreated = $"{note.CreatedAt.Day}.{note.CreatedAt.Month}.{note.CreatedAt.Year}" });
                     }
                 }
 

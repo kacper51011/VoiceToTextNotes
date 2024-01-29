@@ -13,7 +13,7 @@ public partial class CreateNoteFromVoicePopUp : Popup
 
     private void Accept_Clicked(object sender, EventArgs e)
     {
-        var obj = new NoteInformation {Content = ContentEditor.Text, Name = NameEntry.Text };
+        var obj = new NoteInformation {Content = ContentEditor.Text, Name = NameEntry.Text, Created= DateTime.Now };
         this.Close(obj);
     }
 

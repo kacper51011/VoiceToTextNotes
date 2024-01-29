@@ -4,17 +4,26 @@
              x:Class="App.Views.NotesView"
              Title="NotesView"
              >
-    <Grid RowDefinitions="1*, 60">
+    <Grid Margin="10"  RowDefinitions="1*, 60">
             <CollectionView Grid.Row="0" ItemsSource="{Binding Notes}" SelectionMode="Single">
         <CollectionView.ItemsLayout>
-            <LinearItemsLayout Orientation="Vertical" />
+                <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10"  />
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <StackLayout Padding="10">
-                    <Label Text="{Binding Name}" FontAttributes="Bold" />
-                    <Label Text="{Binding Content}" />
-                </StackLayout>
+
+                        <Border  Stroke="Black"  MinimumHeightRequest="50" Padding="10">
+                            
+                            <StackLayout>
+                                <Label Padding="0,0,0,50" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding Name}" FontAttributes="Bold" />
+                                <Label HorizontalOptions="Center" Text="{Binding DisplayedTimeCreated}" />
+                            </StackLayout>
+
+                        </Border>
+
+
+
+
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
