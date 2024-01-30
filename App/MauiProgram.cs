@@ -38,6 +38,9 @@ namespace App
             builder.Services.AddTransient<NotesViewModel>();
             builder.Services.AddTransient<NotesView>();
 
+            builder.Services.AddTransient<NoteViewModel>();
+            builder.Services.AddTransient<NoteView>();
+
             builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<SettingsView>();
 

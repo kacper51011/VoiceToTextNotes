@@ -70,6 +70,9 @@
 	  <MauiXaml Update="Views\NotesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\NoteView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\SettingsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
