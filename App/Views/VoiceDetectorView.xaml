@@ -11,7 +11,7 @@
             HorizontalOptions="Center" />
         
         <Image Grid.Row="1" Source="{Binding MicrophoneImageSource}"  HeightRequest="300"/>
-        <Label Grid.Row="2" Text="{Binding CurrentRecordState}" HorizontalOptions="Center" VerticalOptions="Center" />
+        <Label Grid.Row="2" Text=" " HorizontalOptions="Center" VerticalOptions="Center" />
         <Grid Grid.Row="3" ColumnDefinitions="1*, 1*, 1*" ColumnSpacing="5" Margin="10,0,10,40">
             <Button Grid.Column="0" Text="{Binding GreenButtonState}" Command="{Binding StartDetecting}" Style="{StaticResource VoiceDetectorButton}" IsEnabled="{Binding CanStart}">
                 <Button.Triggers>

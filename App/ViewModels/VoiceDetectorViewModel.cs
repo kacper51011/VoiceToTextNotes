@@ -171,15 +171,22 @@ namespace App.ViewModels
                     AudioPlayer.Play();
                 }
             }
-
-            _speechToText.RecognitionResultCompleted += OnRecognitionTextCompleted;
             await _speechToText.StartListenAsync(CultureInfo.CurrentCulture);
+            _speechToText.RecognitionResultCompleted += OnRecognitionTextCompleted;
+
+
 
         }
 
-        void OnRecognitionTextCompleted(object? sender, SpeechToTextRecognitionResultCompletedEventArgs args)
+        async void OnRecognitionTextCompleted(object? sender, SpeechToTextRecognitionResultCompletedEventArgs args)
         {
-            CurrentRecordState = args.RecognitionResult;
+            
+            CurrentRecordState += " " + args.RecognitionResult;
+            if(CanPause)
+            {
+                await _speechToText.StartListenAsync(CultureInfo.CurrentCulture);
+
+            }
 
         }
 
@@ -200,11 +207,13 @@ namespace App.ViewModels
                 AudioPlayer!.Play();
             }
 
+            await _speechToText.StopListenAsync();
+
             _speechToText.RecognitionResultCompleted -= OnRecognitionTextCompleted;
             RecordSlices.Add(CurrentRecordState);
-            CurrentRecordState = "";
+            CurrentRecordState = " ";
 
-            await _speechToText.StopListenAsync();
+
         }
 
         private async void SetAfterDetectingState()
@@ -222,14 +231,16 @@ namespace App.ViewModels
                 {
                     AudioPlayer!.Play();
                 }
+                await _speechToText.StopListenAsync();
                 _speechToText.RecognitionResultCompleted -= OnRecognitionTextCompleted;
+
                 RecordSlices.Add(CurrentRecordState);
                 var concatenatedRecords = string.Join(" ", RecordSlices.ToArray());
 
                 CurrentRecordState = "";
                 RecordSlices.Clear();
 
-                await _speechToText.StopListenAsync();
+
                 var result = await Shell.Current.ShowPopupAsync(new CreateNoteFromVoicePopUp(concatenatedRecords));
                 if (result is NoteInformation noteResult)
                 {

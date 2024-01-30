@@ -4,15 +4,17 @@
              x:Class="App.MainPage"
              Style="{StaticResource Key=PageBackground}"
              Shell.NavBarIsVisible="False"
+             
+             
              >
 
     <ScrollView VerticalOptions="Center">
-        <Grid RowDefinitions="100,100,100,100, 100" ColumnDefinitions="*" RowSpacing="2" Padding="0, 30, 0, 30" >
+        <Grid RowDefinitions="100,100,100,100" ColumnDefinitions="*" RowSpacing="2" Padding="0, 30, 0, 30" >
             <Label Grid.Row="0" Text="Voice To Notes" Style="{StaticResource MainLabel}" />
             <Button Grid.Row="1" CommandParameter="/VoiceDetector"  Text="Create Voice Note" Style="{StaticResource MainPageButton}" Command="{Binding NavigateToVoiceDetector}"  />
             <Button Grid.Row="2" CommandParameter="/Notes" Text="Notes" Style="{StaticResource MainPageButton}" Command="{Binding NavigateToCommand}" />
-            <Button Grid.Row="3" CommandParameter="/Settings" Text="Settings" Style="{StaticResource MainPageButton}" Command="{Binding NavigateToCommand}" />
-            <Button Grid.Row="4" Text="Exit App" Style="{StaticResource MainPageButton}" Command="{Binding ExitApp}" />
+            <!--<Button Grid.Row="3" CommandParameter="/Settings" Text="Settings" Style="{StaticResource MainPageButton}" Command="{Binding NavigateToCommand}" />-->
+            <Button Grid.Row="3" Text="Exit App" Style="{StaticResource MainPageButton}" Command="{Binding ExitApp}" />
         </Grid>
     </ScrollView>
 
