@@ -4,33 +4,32 @@
              x:Class="App.Views.NotesView"
              Title="Notes"
              >
-    <Grid Margin="10"  RowDefinitions="1*, 60">
+    <Grid Margin="10"  RowDefinitions="1*">
         <CollectionView x:Name="myCollectionView" Grid.Row="0" ItemsSource="{Binding Notes}" SelectionMode="Single">
-        <CollectionView.ItemsLayout>
+            <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10"  />
-        </CollectionView.ItemsLayout>
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
 
-                        <Border  Stroke="Black"  MinimumHeightRequest="50" Padding="10">
+                    <Border  Stroke="Black"  MinimumHeightRequest="50" Padding="10">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={x:Reference myCollectionView}, Path=BindingContext.GoToNote}" CommandParameter="{Binding Id}" />
                         </Border.GestureRecognizers>
-                            
-                            <StackLayout>
-                                <Label Padding="0,0,0,50" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding Name}" FontAttributes="Bold" />
-                                <Label HorizontalOptions="Center" Text="{Binding DisplayedTimeCreated}" />
-                            </StackLayout>
 
-                        </Border>
+                        <StackLayout>
+                            <Label Padding="0,0,0,50" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding Name}" FontAttributes="Bold" />
+                            <Label HorizontalOptions="Center" Text="{Binding DisplayedTimeCreated}" />
+                        </StackLayout>
 
-
+                    </Border>
 
 
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-        <Button Grid.Row="1"  Text="AddNew" Command="{Binding AddMockNote}"/>
+
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </Grid>
 
     
