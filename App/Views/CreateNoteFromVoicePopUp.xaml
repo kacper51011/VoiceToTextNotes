@@ -10,18 +10,18 @@
                
                >
 
-    <Grid RowDefinitions="100, 300, 100" ColumnDefinitions="350" Padding="10">
+    <Grid RowDefinitions="115, 250, 100" ColumnDefinitions="350" Padding="10">
         <Border Grid.Column="0" Grid.Row="0" Stroke="White">
-            <Grid Padding="10" RowDefinitions="*,*">
-                <Label Grid.Row="0" Text="Note Title"/>
-                <Entry Grid.Row="1"  VerticalOptions="Center" HorizontalOptions="Fill" x:Name="NameEntry" IsSpellCheckEnabled="False" />
+            <Grid Padding="10" RowDefinitions="40,*">
+                <Label Grid.Row="0" Text="Note Title" FontSize="22" Padding="0,5,0,5"/>
+                <Entry Grid.Row="1" FontSize="18" Placeholder="Provide Name for your note"  VerticalOptions="Center" HorizontalOptions="Fill" x:Name="NameEntry" IsSpellCheckEnabled="False" />
             </Grid>
 
         </Border>
         <Border Grid.Column="0" Grid.Row="1" Stroke="White">
-            <Grid RowDefinitions="1*,7*" Padding="10">
-                <Label Grid.Row="0" Text="Note Description"/>
-                <Editor  Grid.Row="1"  x:Name="ContentEditor"/>
+            <Grid RowDefinitions="40,*" Padding="10">
+                <Label Grid.Row="0" FontSize="22" Text="Note Description"/>
+                <Editor VerticalOptions="FillAndExpand"  Grid.Row="1"  x:Name="ContentEditor"/>
             </Grid>
 
 
