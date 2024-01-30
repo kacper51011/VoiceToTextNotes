@@ -15,19 +15,29 @@ namespace App.ViewModels
 
         public ObservableCollection<NoteRow> Notes { get; set; } = new ObservableCollection<NoteRow>();
         public Command AddMockNote { get; set; }
-        public NotesViewModel(LocalDbService localDbService)
+
+        public Command GoToNote { get; set; }
+        public NotesViewModel(LocalDbService localDbService): base()
         {
             _localDbService = localDbService;
             AddMockNote = new Command(async () =>
             {
                 await _localDbService.CreateNote(new Note { Content = "Mock Content", Name = "Mocked Name", CreatedAt= DateTime.Now });
             });
+
+            GoToNote = new Command<int>((Id)=>
+            
+                NavigateFromPageTo($"/Note?Id={Id}")
+            );
+
+            base.Commands = [AddMockNote, GoToNote];
         }
 
         public async Task GetNotes()
         {
             try
             {
+                Notes.Clear();
                 var notes = await _localDbService.GetNotes();
                 if(notes != null)
                 {

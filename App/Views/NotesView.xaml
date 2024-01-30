@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.Views.NotesView"
-             Title="NotesView"
+             Title="Notes"
              >
     <Grid Margin="10"  RowDefinitions="1*, 60">
-            <CollectionView Grid.Row="0" ItemsSource="{Binding Notes}" SelectionMode="Single">
+        <CollectionView x:Name="myCollectionView" Grid.Row="0" ItemsSource="{Binding Notes}" SelectionMode="Single">
         <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10"  />
         </CollectionView.ItemsLayout>
@@ -13,6 +13,9 @@
             <DataTemplate>
 
                         <Border  Stroke="Black"  MinimumHeightRequest="50" Padding="10">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference myCollectionView}, Path=BindingContext.GoToNote}" CommandParameter="{Binding Id}" />
+                        </Border.GestureRecognizers>
                             
                             <StackLayout>
                                 <Label Padding="0,0,0,50" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding Name}" FontAttributes="Bold" />

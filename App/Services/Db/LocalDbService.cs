@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Java.Text.Normalizer;
 
 namespace App.Services.Db
 {
@@ -51,9 +52,10 @@ namespace App.Services.Db
             await _connection.InsertAsync(note);
         }
 
-        public async Task Delete(Note note)
+        public async Task Delete(int Id)
         {
-            await _connection.DeleteAsync(note);
+            await _connection.ExecuteAsync("DELETE FROM Note WHERE Id = ?", Id);
+
         }
 
     }
