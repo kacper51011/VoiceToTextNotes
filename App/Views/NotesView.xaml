@@ -5,7 +5,10 @@
              Title="Notes"
              >
     <Grid Margin="10"  RowDefinitions="1*">
-        <CollectionView x:Name="myCollectionView" Grid.Row="0" ItemsSource="{Binding Notes}" SelectionMode="Single">
+        <CollectionView x:Name="myCollectionView" Grid.Row="0" ItemsSource="{Binding Notes}" SelectionMode="Single" >
+            <CollectionView.EmptyView>
+                <Label VerticalOptions="Center" FontSize="22" HorizontalOptions="Center" Text="Create new notes and check them here!" />
+            </CollectionView.EmptyView>
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10"  />
             </CollectionView.ItemsLayout>
