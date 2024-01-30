@@ -9,6 +9,8 @@ public partial class NoteView : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = _viewModel = viewmodel;
+
+		
 	}
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
@@ -16,5 +18,10 @@ public partial class NoteView : ContentPage
         _viewModel.NavigatedToPage();
 
 
+    }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.OnApearingAsync();
     }
 }

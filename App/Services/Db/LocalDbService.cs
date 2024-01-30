@@ -54,7 +54,7 @@ namespace App.Services.Db
 
         public async Task Delete(int Id)
         {
-            await _connection.ExecuteAsync("DELETE FROM Note WHERE Id = ?", Id);
+            await _connection.ExecuteAsync("DELETE FROM Notes WHERE Id = ?", Id);
 
         }
 

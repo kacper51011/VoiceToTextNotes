@@ -3,10 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.Views.NoteView"
              Title="{Binding NoteId, StringFormat='Note Number {0}'}">
-    <Grid RowDefinitions="50, 1*, 100" Margin="10,30,10,30">
-        <Label           
-            Text="{Binding NoteId}"
+    <Grid RowDefinitions="50, 1*, 100" Margin="10,30,10,30" RowSpacing="30">
+        <Label Grid.Row="0"
+            FontSize="30"
+               FontAttributes="Bold"
+               TextTransform="Uppercase"
+            Text="{Binding Name}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        <Label Grid.Row="1" Text="{Binding Content}" />
+        <Button Grid.Row="2" Command="{Binding DeleteNote}" Text="DELETE NOTE" WidthRequest="100" HeightRequest="60" BackgroundColor="{StaticResource stopButtonBackground}" />
     </Grid>
 </ContentPage>
